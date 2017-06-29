@@ -5,12 +5,22 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import AvTimer from 'material-ui-icons/AvTimer';
+// import IconButton from 'material-ui/IconButton';
+import Home from 'material-ui-icons/Home';
+import AccessTime from 'material-ui-icons/AccessTime';
 import Settings from 'material-ui-icons/Settings';
-import colors from './../colors';
+import colors from './../../colors';
 
 const styleSheet = createStyleSheet('Header', {
+  icon: {
+    height: 28,
+    width: 28,
+    color: colors.lightestblueGrey,
+  },
+  time: {
+    height: 25,
+    width: 25,
+  },
   root: {
     width: '100%',
   },
@@ -19,15 +29,14 @@ const styleSheet = createStyleSheet('Header', {
   },
   title: {
     flex: 1,
-    paddingTop: 14,
-    fontSize: 36,
+    paddingTop: 8,
+    fontSize: 34,
     fontWeight: 400,
     letterSpacing: 1.4,
   },
   settings: {
-    paddingTop: 3,
-    fontSize: 20,
     color: colors.lightestblueGrey,
+    fontSize: 20,
     textTransform: 'capitalize',
   },
 });
@@ -38,24 +47,24 @@ function Header(props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar className={classes.bar}>
-          <IconButton color="contrast" aria-label="Menu">
-            <AvTimer color={colors.lightestblueGrey} />
-          </IconButton>
+          <Button>
+            <Home className={classes.icon} aria-label="home" />
+            <Typography type="caption" className={classes.settings}>
+              &nbsp;Home
+            </Typography>
+          </Button>
           <Typography
             color="inherit"
             className={classes.title}
             gutterBottom
             align="center"
           >
-            Time Table Generator
+            <AccessTime className={classes.time} />
+            &nbsp;Time Table Generator
           </Typography>
           <Button>
-            <Settings color={colors.lightestblueGrey} />
-            <Typography
-              color="reds"
-              type="caption"
-              className={classes.settings}
-            >
+            <Settings className={classes.icon} aria-label="setting" />
+            <Typography type="caption" className={classes.settings}>
               &nbsp;Settings
             </Typography>
           </Button>
