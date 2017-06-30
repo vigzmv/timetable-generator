@@ -18,9 +18,11 @@
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.1.0",
     "flow-bin": "^0.48.0",
-    "react-scripts": "1.0.7"
+    "react-scripts": "1.0.7",
+    "source-map-explorer": "^1.3.3"
   },
   "scripts": {
+    "analyze": "source-map-explorer docs/static/js/main.*",
     "start": "react-scripts start",
     "build": "react-scripts build && mv build docs",
     "test": "react-scripts test --env=jsdom",

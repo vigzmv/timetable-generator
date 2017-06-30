@@ -1,8 +1,9 @@
-import { white, blueGrey } from 'material-ui/styles/colors';
+import { white, blueGrey, pink } from 'material-ui/styles/colors';
 
 const colors = {
   white,
-  lightestblueGrey: blueGrey[50],
+  blueGreyLighter: blueGrey[50],
+  pinkDark: pink[700],
 };
 
 export default colors;

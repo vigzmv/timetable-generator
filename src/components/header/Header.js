@@ -12,14 +12,17 @@ import Settings from 'material-ui-icons/Settings';
 import colors from './../../colors';
 
 const styleSheet = createStyleSheet('Header', {
+  header: {
+    backgroundColor: colors.pinkDark,
+  },
   icon: {
-    height: 28,
-    width: 28,
-    color: colors.lightestblueGrey,
+    height: 27,
+    width: 27,
+    color: colors.blueGreyLighter,
   },
   time: {
-    height: 25,
-    width: 25,
+    height: 23,
+    width: 23,
   },
   root: {
     width: '100%',
@@ -30,13 +33,13 @@ const styleSheet = createStyleSheet('Header', {
   title: {
     flex: 1,
     paddingTop: 8,
-    fontSize: 34,
+    fontSize: 31,
     fontWeight: 400,
     letterSpacing: 1.4,
   },
   settings: {
-    color: colors.lightestblueGrey,
-    fontSize: 20,
+    color: colors.blueGreyLighter,
+    fontSize: 19,
     textTransform: 'capitalize',
   },
 });
@@ -45,7 +48,7 @@ function Header(props) {
   const classes = props.classes;
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.header}>
         <Toolbar className={classes.bar}>
           <Button>
             <Home className={classes.icon} aria-label="home" />
