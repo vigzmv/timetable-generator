@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import Tabs, { Tab } from 'material-ui/Tabs';
+import { withRouter } from 'react-router-dom';
+import BrowserRouterWrapper from '../../browserRouterWrapper';
 
 class Navbar extends Component {
-  state = {
-    index: 0,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      index: props.location.pathname[1] || 0,
+    };
+  }
 
   handleChange = (event, index) => {
     this.setState({ index });
+    this.props.history.push(`${index}`);
   };
 
   render() {
     return (
       <Paper style={{ width: '100%' }} elevation={3} square>
         <Tabs
-          index={this.state.index}
+          index={parseInt(this.state.index, 10)}
           onChange={this.handleChange}
           fullWidth
           indicatorColor="accent"
@@ -32,4 +38,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default BrowserRouterWrapper(withRouter(Navbar));
