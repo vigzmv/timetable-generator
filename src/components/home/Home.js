@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
-import { MuiThemeProvider } from 'material-ui/styles';
 import Header from '../../components/header/Header';
 import Navbar from '../../components/navbar/Navbar';
+import ComponentWrappers from '../../ComponentWrappers';
 
 class Home extends Component {
   render() {
     return (
-      <MuiThemeProvider>
-        <div>
-          <Header />
-          <Navbar />
-        </div>
-      </MuiThemeProvider>
+      <div>
+        <Header />
+        <Navbar />
+      </div>
     );
   }
 }
 
-export default Home;
+export default ComponentWrappers(Home);

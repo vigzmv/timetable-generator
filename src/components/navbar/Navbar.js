@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import { withRouter } from 'react-router-dom';
-import BrowserRouterWrapper from '../../browserRouterWrapper';
 
 class Navbar extends Component {
   constructor(props) {
@@ -38,4 +37,4 @@ class Navbar extends Component {
   }
 }
 
-export default BrowserRouterWrapper(withRouter(Navbar));
+export default withRouter(Navbar);
