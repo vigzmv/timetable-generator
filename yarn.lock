@@ -5151,6 +5151,12 @@ react-scrollbar-size@^2.0.0:
     prop-types "^15.5.10"
     react-event-listener "^0.4.5"
 
+react-table@^6.5.1:
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-6.5.1.tgz#f60b80f8d23c5977969561fa56eddcdf33fb9900"
+  dependencies:
+    classnames "^2.2.5"
+
 react-transition-group@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-1.2.0.tgz#b51fc921b0c3835a7ef7c571c79fc82c73e9204f"
