@@ -1,3 +1,3 @@
-import AddTeachersRooms from "./AddTeachersRooms";
+import AddTeachersRooms from './AddTeachersRooms';
 
 export default AddTeachersRooms;

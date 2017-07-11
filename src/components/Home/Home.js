@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import { Header, Navbar, AddTimeTable , AddTeachersRooms } from '../../components/';
+import { Header, Navbar, AddTimeTable, AddTeachersRooms } from '../../components/';
 import ComponentWrappers from '../../ComponentWrappers';
 
 class Home extends Component {

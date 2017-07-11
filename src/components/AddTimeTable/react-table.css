@@ -1,18 +1,27 @@
-.rt-tbody {
+.rt-thead.-header {
+  border-left: 1px solid black;
   border-top: 1px solid black;
 }
 
-.rt-tr.-even {
-  border: 1px solid black;
-  border-top: 0px solid black;
+.rt-resizable-header:nth-child(1),
+.rt-resizable-header:nth-child(2),
+.rt-resizable-header:nth-child(3) {
+  border-right: 1px solid black!important;
 }
 
-.rt-tr.-odd {
-  border: 1px solid black;
-  border-bottom: 0px solid black;
+.rt-resizable-header:nth-child(5),
+.rt-resizable-header:nth-child(6),
+.rt-resizable-header:nth-child(7) {
+  border-left: 1px solid black!important;
+}
+
+.rt-tr {
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
   border-top: 0px solid black;
 }
 
 .rt-td {
   border-left: 1px solid black;
+  text-align: center;
 }
