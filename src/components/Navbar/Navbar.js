@@ -13,7 +13,22 @@ class Navbar extends Component {
 
   handleChange = (event, index) => {
     this.setState({ index });
-    this.props.history.push(`${index}`);
+    switch (index) {
+      case 0:
+      case 1:
+
+        this.props.history.push(`${index}`);
+        break;
+      case 2:
+
+        this.props.history.push("teachers");
+        break;
+      case 3:
+        this.props.history.push("rooms");
+        break;
+      default:
+        break;
+    }
   };
 
   render() {

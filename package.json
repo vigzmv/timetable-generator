@@ -6,6 +6,7 @@
     "material-ui": "next",
     "material-ui-icons": "^1.0.0-alpha.19",
     "prop-types": "^15.5.10",
+    "re-base": "^3.0.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.1.1",
