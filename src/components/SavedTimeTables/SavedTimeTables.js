@@ -4,7 +4,8 @@ import Grid from "material-ui/Grid";
 import { createStyleSheet , withStyles } from "material-ui/styles";
 import Dialog from "material-ui/Dialog";
 import PropTypes from "prop-types";
-import base from "./../base";
+import { withRouter } from "react-router-dom";
+import Button from "material-ui/Button";
 import TimeTablelList from "./TimeTableList";
 import Slide from "material-ui/transitions/Slide";
 import ReactTable from "react-table";
@@ -15,6 +16,7 @@ import IconButton from "material-ui/IconButton";
 import CloseIcon from "material-ui-icons/Close";
 import colors from "./../../colors";
 import "./../AddTimeTable/react-table.css";
+import base from "./../base";
 
 class SavedTimeTables extends Component{
   constructor(){
@@ -24,6 +26,8 @@ class SavedTimeTables extends Component{
       this.dialogOpen= this.dialogOpen.bind(this);
       this.dialogClose= this.dialogClose.bind(this);
       this.renderCells= this.renderCells.bind(this);
+      this.edit= this.edit.bind(this);
+      this.delete= this.delete.bind(this);
 
       this.state= {
         data: [{}],
@@ -89,11 +93,12 @@ class SavedTimeTables extends Component{
   }
 
   fetchTimeTables(){
+    console.log(7647);
     base.fetch('timeTables', {
       context: this,
       asArray: true
     }).then(data => {
-      this.setState({ data })
+      this.setState({ data },()=>console.log(data));
     }).catch(error => {
       //handle error
     });
@@ -105,6 +110,20 @@ class SavedTimeTables extends Component{
 
   dialogClose(){
     this.setState({ dialogOpen: false });
+  }
+
+  edit(){
+    this.props.history.push(`0/${this.state.index}`);
+  }
+
+  delete(){
+    const { data , index }= this.state;
+    base.remove(`timeTables/${data[index].key}`).then(() => {
+      this.dialogClose();
+      this.props.history.push("0");
+    }).catch(error => {
+      //handle error
+    });
   }
 
   render(){
@@ -124,9 +143,16 @@ class SavedTimeTables extends Component{
             >
               <AppBar className= { classes.appBar } >
                 <Toolbar>
-                  <IconButton color= "contrast" onClick= {this.dialogClose} aria-label= "Close" >
+                  <IconButton color= "contrast" onClick= { this.dialogClose } aria-label= "Close" >
                     <CloseIcon />
                   </IconButton>
+                  <div className= { classes.flex } ></div>
+                  <Button raised color= "primary" className= { classes.button } onClick={ this.edit } >
+                      <Typography type="caption" className={ classes.settings } >&nbsp;Edit</Typography>
+                  </Button>
+                  <Button raised color= "accent" className= { classes.button } onClick= { this.delete } >
+                    <Typography type="caption" className= { classes.settings } >&nbsp;Delete</Typography>
+                  </Button>
                 </Toolbar>
               </AppBar>
               <div className="table-wrap" style={{ margin: '20px' }}>
@@ -157,6 +183,17 @@ const styleSheet = createStyleSheet("SavedTimeTables" , theme => ({
   appBar: {
     position: "relative",
     backgroundColor: colors.pinkDark
+  },
+  flex: {
+    flex: 1
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+  settings: {
+    color: colors.blueGreyLighter,
+    fontSize: 19,
+    textTransform: 'capitalize',
   }
 }));
 
@@ -164,4 +201,4 @@ SavedTimeTables.propTypes= {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styleSheet)(SavedTimeTables);
+export default withRouter(withStyles(styleSheet)(SavedTimeTables));

@@ -10,9 +10,10 @@ class Home extends Component {
         <Header />
         <Navbar />
         <Route exact path="/0" component={AddTimeTable} />
-        <Route exact path="/1" component={SavedTimeTables} />
+        <Route path="/1" component={SavedTimeTables} />
         <Route exact path="/teachers" component={AddTeachersRooms} />
         <Route exact path="/rooms" component={AddTeachersRooms} />
+        <Route exact path="/" component={AddTimeTable} />
       </div>
     );
   }
