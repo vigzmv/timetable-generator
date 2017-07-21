@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from 'material-ui/Button';
+import TextField from 'material-ui/TextField';
+
 
 class InputBox extends React.Component {
   constructor() {
@@ -30,9 +33,15 @@ class InputBox extends React.Component {
     }
 
     return (
+
       <form ref={input => this.inputForm = input} onSubmit={this.createData} >
-        <input ref={input => this.name = input} placeholder={placeholderValue} type="text" />
-        <button type="submit">Add</button>
+          <TextField
+            style={{ width: '50%', marginLeft: 50 }}
+            ref={input => this.name = input}
+            type="text"
+            label={placeholderValue}
+          />
+        <Button style={{ marginLeft: 10 }} raised type="submit" color="accent">Add</Button>
       </form>
     );
   }

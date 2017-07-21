@@ -2,6 +2,9 @@ import React from 'react';
 import InputBox from './InputBox';
 import base from '../base';
 import RenderData from './RenderData';
+import Card, { CardActions, CardContent } from 'material-ui/Card';
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -112,9 +115,14 @@ class App extends React.Component {
     const { data } = this.state;
     return (
       <div>
-        <h1>{data}</h1>
-        <InputBox addTeacher={this.addTeacher} addRoom={this.addRoom} data={data} />
-        <ul>{this.renderLi()}</ul>
+        <Card style={{ width: '35%', margin: 20, marginLeft: 430 }}>
+          <CardContent>
+            <h1 style={{marginLeft: 150 }}>{data}</h1>
+            <hr></hr>
+            <InputBox addTeacher={this.addTeacher} addRoom={this.addRoom} data={data} />
+            <List style={{margin: 20}}>{this.renderLi()}</List>
+          </CardContent>
+        </Card>
       </div>
     );
   }
