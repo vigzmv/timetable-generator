@@ -1,19 +1,20 @@
 import React, { PureComponent } from 'react';
-import { FormGroup , FormLabel , FormControl } from "material-ui/Form";
-import TextField from "material-ui/TextField";
-import Button from "material-ui/Button";
-import { createStyleSheet , withStyles } from "material-ui/styles";
-import Typography from "material-ui/Typography";
-import PropTypes from "prop-types";
-
+import { FormGroup, FormLabel, FormControl } from 'material-ui/Form';
+import { createStyleSheet, withStyles } from 'material-ui/styles';
+import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
+import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+
 import './react-table.css';
-import base from "./../base";
+import base from './../base';
 
 class AddTimeTable extends PureComponent {
   constructor(props, context) {
     super(props, context);
+
     this.renderEditable = this.renderEditable.bind(this);
     this.pushTimeTableInfo = this.pushTimeTableInfo.bind(this);
 
@@ -27,9 +28,10 @@ class AddTimeTable extends PureComponent {
         { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
         { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
       ],
-      classInfo: "",
-      semester: "",
-      shift: ""
+
+      classInfo: '',
+      semester: '',
+      shift: '',
     };
 
     this.columns = [
@@ -71,21 +73,43 @@ class AddTimeTable extends PureComponent {
     ];
   }
 
-  pushTimeTableInfo(event){
-    event.preventDefault();
-    const { classInfo , semester , shift , data } = this.state;
-    console.log(classInfo,semester,shift);
-    const self= this;
-    base.post(`timeTables/${Date.now()}` , {
-      data: { data,
-        classInfo,
-        shift,
-        semester },
-      then(err){
-        if(!err){
-          self.timeTableForm.reset();
-        }
+
+  componentDidMount() {
+    const key = this.props.location.pathname.split('/')[2];
+
+    base.fetch(`timeTables/${key}`, {
+      context: this,
+      asArray: true,
+    }).then((data) => {
+      // it's a hack! :/
+      if (data.length != 0) {
+        this.setState(
+          {
+            classInfo: data[0],
+            data: data[1],
+            shift: data[2],
+            semester: data[3],
+          });
       }
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  pushTimeTableInfo(event) {
+    event.preventDefault();
+
+    const self = this;
+    const key = this.props.location.pathname.split('/')[2];
+
+    base.post(`timeTables/${key || Date.now()}`, {
+      data: this.state,
+      then(err) {
+        if (!err) {
+          self.timeTableForm.reset();
+          self.props.history.push('/saved');
+        }
+      },
     });
   }
 
@@ -132,71 +156,77 @@ class AddTimeTable extends PureComponent {
   }
 
   render() {
-    const { classes }= this.props;
-    console.dir(this.state.data);
+    const { classes } = this.props;
+    const { data, classInfo, semester, shift } = this.state;
     console.dir(' Boom!! Render Bomb!!');
+
     return (
-      <form onSubmit= { this.pushTimeTableInfo } ref= { input => this.timeTableForm = input } >
-        <div className= { classes.form } >
-          <FormLabel htmlFor= "time-table-info">
+      <form onSubmit={this.pushTimeTableInfo} ref={input => this.timeTableForm = input} >
+        <div className={classes.form} >
+          <FormLabel htmlFor="time-table-info">
             <Typography type="display2" >&nbsp;Time Table Info</Typography>
           </FormLabel>
-          <FormGroup id= "time-table-info" >
+
+          <FormGroup id="time-table-info" >
             <FormControl>
               <TextField
-              required
-              id= "classInfo"
-              label= "ClassInfo"
-              onChange= {(e) => this.setState({ classInfo: e.target.value })}
-              className= { classes.input }
-              marginForm
+                required
+                id="classInfo"
+                label="ClassInfo"
+                onChange={e => this.setState({ classInfo: e.target.value })}
+                className={classes.input}
+                marginForm
+                value={classInfo || ''}
               />
               <TextField
-              required
-              id= "semester"
-              label= "Semester"
-              onChange= {(e) => this.setState({ semester: e.target.value })}
-              className= { classes.input }
-              marginForm
+                required
+                id="semester"
+                label="Semester"
+                onChange={e => this.setState({ semester: e.target.value })}
+                className={classes.input}
+                marginForm
+                value={semester || ''}
               />
               <TextField
-              required
-              id= "shift"
-              label= "Shift"
-              onChange= {(e) => this.setState({ shift: e.target.value })}
-              className= { classes.input }
-              marginForm
+                required
+                id="shift"
+                label="Shift"
+                onChange={e => this.setState({ shift: e.target.value })}
+                className={classes.input}
+                marginForm
+                value={shift || ''}
               />
             </FormControl>
           </FormGroup>
+
         </div>
         <div className="table-wrap" style={{ margin: '20px' }}>
           <ReactTable
-            data={this.state.data}
+            data={data}
             columns={this.columns}
             defaultPageSize={6}
             showPageSizeOptions={false}
             showPagination={false}
           />
         </div>
-        <Button raised color= "primary" type= "submit" className= { classes.button } >
-          <Typography type= "button"  >&nbsp;Save</Typography>
+        <Button raised color="primary" type="submit" className={classes.button} >
+          <Typography type="button" >&nbsp;Save</Typography>
         </Button>
       </form>
     );
   }
 }
 
-const styleSheet= createStyleSheet("AddTimeTable" , theme => ({
+const styleSheet = createStyleSheet('AddTimeTable', theme => ({
   input: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
   },
   form: {
-    margin: 50
+    margin: 50,
   },
   button: {
-    margin: 25
-  }
+    margin: 25,
+  },
 }));
 
 AddTimeTable.propTypes = {

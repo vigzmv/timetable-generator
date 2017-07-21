@@ -44,6 +44,7 @@ const styleSheet = createStyleSheet('Header', {
   },
 });
 
+
 function Header(props) {
   const classes = props.classes;
   return (
