@@ -9,7 +9,8 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
 import './react-table.css';
-import base from './../base';
+import base from '../../re-base';
+import { emptyStarterTimeTable } from '../../constants';
 
 class AddTimeTable extends PureComponent {
   constructor(props, context) {
@@ -19,15 +20,7 @@ class AddTimeTable extends PureComponent {
     this.pushTimeTableInfo = this.pushTimeTableInfo.bind(this);
 
     this.state = {
-      data: [
-        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
-        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
-        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
-        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
-        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
-        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
-        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
-      ],
+      data: emptyStarterTimeTable,
 
       classInfo: '',
       semester: '',
@@ -74,7 +67,7 @@ class AddTimeTable extends PureComponent {
   }
 
 
-  componentDidMount() {
+  componentWillMount() {
     const key = this.props.location.pathname.split('/')[2];
 
     base.fetch(`timeTables/${key}`, {
@@ -91,6 +84,7 @@ class AddTimeTable extends PureComponent {
             semester: data[3],
           });
       }
+      this.forceUpdate();
     }).catch((error) => {
       console.log(error);
     });
@@ -130,7 +124,7 @@ class AddTimeTable extends PureComponent {
         <br />
 
         <select
-          defaultValue={this.state.data[cellInfo.index][cellInfo.column.id][1]}
+          value={this.state.data[cellInfo.index][cellInfo.column.id][1]}
           onChange={(e) => {
             const data = [...this.state.data];
             data[cellInfo.index][cellInfo.column.id][1] = e.target.value;
@@ -138,11 +132,12 @@ class AddTimeTable extends PureComponent {
           }}
         >
           <option>Not Set</option>
+          <option>s</option>
         </select>
         <br />
 
         <select
-          defaultValue={this.state.data[cellInfo.index][cellInfo.column.id][2]}
+          value={this.state.data[cellInfo.index][cellInfo.column.id][2]}
           onChange={(e) => {
             const data = [...this.state.data];
             data[cellInfo.index][cellInfo.column.id][2] = e.target.value;

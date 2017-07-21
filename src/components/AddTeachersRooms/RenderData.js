@@ -10,7 +10,7 @@ class RenderData extends React.Component {
     } else {
       data = details.state.rooms[details.index];
     }
-    const removeButton = <button onClick={() => details.removeData(details.index)}>&times;</button>;
+    const removeButton = <button onClick={() => details.removeData(details.index)}> &times;</button>;
     return (
       <li >{data.name}<span>{removeButton}</span></li>
     );

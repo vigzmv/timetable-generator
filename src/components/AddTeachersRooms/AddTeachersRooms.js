@@ -1,6 +1,6 @@
 import React from 'react';
 import InputBox from './InputBox';
-import base from '../base';
+import base from '../../re-base';
 import RenderData from './RenderData';
 
 class App extends React.Component {

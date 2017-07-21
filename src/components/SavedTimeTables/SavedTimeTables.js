@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import ReactTable from 'react-table';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import { createStyleSheet, withStyles } from 'material-ui/styles';
 import Dialog from 'material-ui/Dialog';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import Button from 'material-ui/Button';
 import Slide from 'material-ui/transitions/Slide';
-import ReactTable from 'react-table';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import 'react-table/react-table.css';
+
 import TimeTablelList from './TimeTableList';
 import colors from './../../colors';
+import base from '../../re-base';
 import './../AddTimeTable/react-table.css';
-import base from './../base';
 
 class SavedTimeTables extends Component {
   constructor() {
@@ -119,11 +120,11 @@ class SavedTimeTables extends Component {
     const { data, index } = this.state;
     return (
       <div style={{ backgroundColor: '#fafafa' }} >
-        <div>{data[index].data[cellInfo.index][cellInfo.column.id][0]}</div>
+        <div>{data[index].data[cellInfo.index][cellInfo.column.id][0] || 'Not Set'}</div>
         <br />
-        <div>Not Set</div>
+        <div>{data[index].data[cellInfo.index][cellInfo.column.id][1] || 'Not Set'}</div>
         <br />
-        <div>Not Set</div>
+        <div>{data[index].data[cellInfo.index][cellInfo.column.id][2] || 'Not Set'}</div>
         <br />
       </div>
     );
@@ -164,16 +165,13 @@ class SavedTimeTables extends Component {
               <Paper style={{ margin: '20px', padding: '20px' }} elevation={2} square>
                 <Typography type="title">
                   Class:
-                  <span className={classes.ttinfo}>
-                    {data[index].classInfo}
+                  <span className={classes.ttinfo}> {data[index].classInfo}
                   </span>
                   Semester:
-                  <span className={classes.ttinfo}>
-                    {data[index].semester}
+                  <span className={classes.ttinfo}> {data[index].semester}
                   </span>
                   Shift:
-                  <span className={classes.ttinfo}>
-                    {data[index].shift}
+                  <span className={classes.ttinfo}> {data[index].shift}
                   </span>
                 </Typography>
               </Paper>
@@ -220,7 +218,7 @@ const styleSheet = createStyleSheet('SavedTimeTables', theme => ({
   },
   ttinfo: {
     color: 'grey',
-    paddingLeft: '250px',
+    paddingRight: '250px',
   },
 }));
 
