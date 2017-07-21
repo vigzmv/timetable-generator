@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Typography from 'material-ui/Typography';
+import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import { createStyleSheet, withStyles } from 'material-ui/styles';
 import Dialog from 'material-ui/Dialog';
@@ -159,19 +160,37 @@ class SavedTimeTables extends Component {
                   </Button>
                 </Toolbar>
               </AppBar>
+
+              <Paper style={{ margin: '20px', padding: '20px' }} elevation={2} square>
+                <Typography type="title">
+                  Class:
+                  <span className={classes.ttinfo}>
+                    {data[index].classInfo}
+                  </span>
+                  Semester:
+                  <span className={classes.ttinfo}>
+                    {data[index].semester}
+                  </span>
+                  Shift:
+                  <span className={classes.ttinfo}>
+                    {data[index].shift}
+                  </span>
+                </Typography>
+              </Paper>
+
               <div className="table-wrap" style={{ margin: '20px' }}>
                 <ReactTable
                   data={data[index].data}
                   columns={this.columns}
-                  defaultPageSize={4}
-                  showPageSizeOptions
-                  showPagination
+                  defaultPageSize={6}
+                  showPageSizeOptions={false}
+                  showPagination={false}
                 />
               </div>
             </Dialog>
           </div>
         </Grid>
-      </Grid>
+      </Grid >
     );
   }
 }
@@ -198,6 +217,10 @@ const styleSheet = createStyleSheet('SavedTimeTables', theme => ({
     color: colors.blueGreyLighter,
     fontSize: 19,
     textTransform: 'capitalize',
+  },
+  ttinfo: {
+    color: 'grey',
+    paddingLeft: '250px',
   },
 }));
 

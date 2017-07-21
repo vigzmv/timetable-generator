@@ -81,7 +81,7 @@ class AddTimeTable extends PureComponent {
       context: this,
       asArray: true,
     }).then((data) => {
-      // it's a hack! :/
+      // eslint-disable-next-line
       if (data.length != 0) {
         this.setState(
           {

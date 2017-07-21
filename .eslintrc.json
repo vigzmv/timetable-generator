@@ -27,10 +27,12 @@
         "no-undef": "warn",
         "no-unreachable": "warn",
         "no-unused-vars": "warn",
+        "no-return-assign": "off",
         "constructor-super": "warn",
         "valid-typeof": "warn",
         "global-require": "off",
         "react/prop-types": "off",
+        "react/forbid-prop-types": "off",
         "react/jsx-filename-extension": [
             1,
             {
