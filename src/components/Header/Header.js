@@ -44,18 +44,21 @@ const styleSheet = createStyleSheet('Header', {
   },
 });
 
+
 function Header(props) {
   const classes = props.classes;
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.header}>
         <Toolbar className={classes.bar}>
+
           <Button>
             <Home className={classes.icon} aria-label="home" />
             <Typography type="caption" className={classes.settings}>
               &nbsp;Home
             </Typography>
           </Button>
+
           <Typography
             color="inherit"
             className={classes.title}
@@ -65,12 +68,15 @@ function Header(props) {
             <AccessTime className={classes.time} />
             &nbsp;Time Table Generator
           </Typography>
+
           <Button>
             <Settings className={classes.icon} aria-label="setting" />
             <Typography type="caption" className={classes.settings}>
               &nbsp;Settings
             </Typography>
+
           </Button>
+
         </Toolbar>
       </AppBar>
     </div>

@@ -3,28 +3,37 @@ import Paper from 'material-ui/Paper';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import { withRouter } from 'react-router-dom';
 
+const getPathIndex = (path) => {
+  const paths = ['addnew', 'saved', 'teachers', 'rooms'];
+  return paths.indexOf(path.slice(1));
+};
+
 class Navbar extends Component {
   constructor(props) {
     super(props);
+
+    this.path = props.location.pathname;
     this.state = {
-      index: props.location.pathname[1] || 0,
+      index: getPathIndex(this.path),
     };
   }
 
   handleChange = (event, index) => {
     this.setState({ index });
+
+    const { history } = this.props;
     switch (index) {
       case 0:
+        history.push('/addnew');
+        break;
       case 1:
-
-        this.props.history.push(`${index}`);
+        history.push('/saved');
         break;
       case 2:
-
-        this.props.history.push("teachers");
+        history.push('/teachers');
         break;
       case 3:
-        this.props.history.push("rooms");
+        history.push('/rooms');
         break;
       default:
         break;
@@ -35,7 +44,7 @@ class Navbar extends Component {
     return (
       <Paper style={{ width: '100%' }} elevation={3} square>
         <Tabs
-          index={parseInt(this.state.index, 10)}
+          index={this.state.index}
           onChange={this.handleChange}
           fullWidth
           indicatorColor="accent"
@@ -47,7 +56,7 @@ class Navbar extends Component {
           <Tab label="Saved Teachers" />
           <Tab label="Saved Rooms" />
         </Tabs>
-      </Paper>
+      </Paper >
     );
   }
 }

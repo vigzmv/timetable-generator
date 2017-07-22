@@ -1,3 +1,3 @@
-import SavedTimeTables from "./SavedTimeTables";
+import SavedTimeTables from './SavedTimeTables';
 
 export default SavedTimeTables;
