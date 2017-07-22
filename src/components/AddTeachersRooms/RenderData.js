@@ -1,4 +1,5 @@
 import React from 'react';
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
 class RenderData extends React.Component {
   render() {
@@ -12,7 +13,7 @@ class RenderData extends React.Component {
     }
     const removeButton = <button onClick={() => details.removeData(details.index)}> &times;</button>;
     return (
-      <li >{data.name}<span>{removeButton}</span></li>
+      <ListItem button><ListItemText primary={data.name} /><span>{removeButton}</span></ListItem>
     );
   }
 }
