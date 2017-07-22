@@ -3,14 +3,10 @@ import { Route, Switch } from 'react-router-dom';
 import { Header, Navbar, AddTimeTable, AddTeachersRooms, SavedTimeTables } from '../../components/';
 import ComponentWrappers from '../../ComponentWrappers';
 
-import { generateTT } from '../../helpers';
-
 const welcome = () => <h3>Welcome to TT</h3>;
 
 class Home extends Component {
   render() {
-    generateTT(null, 's');
-
     return (
       <div>
         <Header />
