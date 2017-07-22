@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { Component } from 'react';
 import InputBox from './InputBox';
 import base from '../../re-base';
 import RenderData from './RenderData';
-import Card, { CardActions, CardContent } from 'material-ui/Card';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import Card, { CardContent } from 'material-ui/Card';
+import List from 'material-ui/List';
+import Dialog from "material-ui/Dialog";
+import Slide from 'material-ui/transitions/Slide';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
+import Paper from "material-ui/Paper";
+import Typography from "material-ui/Typography";
+import 'react-table/react-table.css';
+import ReactTable from 'react-table';
+import { createStyleSheet, withStyles } from 'material-ui/styles';
+import PropTypes from "prop-types";
+
+import { generateTT } from "./../../helpers";
+import colors from './../../colors';
+import './../AddTimeTable/react-table.css';
+import { emptyStarterTimeTable } from '../../constants';
 
 
-class App extends React.Component {
+class AddTeacherRooms extends Component {
   constructor(props) {
     super(props);
 
@@ -16,12 +33,71 @@ class App extends React.Component {
     this.removeData = this.removeData.bind(this);
     this.removeRoom = this.removeRoom.bind(this);
     this.removeTeacher = this.removeTeacher.bind(this);
+    this.dialogOpen = this.dialogOpen.bind(this);
+    this.dialogClose = this.dialogClose.bind(this);
+    this.name = this.name.bind(this);
+    this.renderCells = this.renderCells.bind(this);
 
     this.state = {
       teachers: {},
       rooms: {},
       data: (this.props.match.path).slice(1),
+      dialogOpen:false,
+      index: -1,
+      timeTableData: emptyStarterTimeTable
     };
+
+    this.columns = [
+      {
+        Header: '1st',
+        accessor: 'sl1',
+        Cell: this.renderCells,
+      },
+      {
+        Header: '2nd',
+        accessor: 'sl2',
+        Cell: this.renderCells,
+      },
+      {
+        Header: '3rd',
+        accessor: 'sl3',
+        Cell: this.renderCells,
+      },
+      {
+        Header: '4th',
+        accessor: 'sl4',
+        Cell: this.renderCells,
+      },
+      {
+        Header: '5th',
+        accessor: 'sl5',
+        Cell: this.renderCells,
+      },
+      {
+        Header: '6th',
+        accessor: 'sl6',
+        Cell: this.renderCells,
+      },
+      {
+        Header: '7th',
+        accessor: 'sl7',
+        Cell: this.renderCells,
+      },
+    ];
+  }
+
+  renderCells(cellInfo) {
+    const { timeTableData } = this.state;
+    return (
+      <div style={{ backgroundColor: '#fafafa' }} >
+        <div>{timeTableData[cellInfo.index][cellInfo.column.id][0] || 'Not Set'}</div>
+        <br />
+        <div>{timeTableData[cellInfo.index][cellInfo.column.id][1] || 'Not Set'}</div>
+        <br />
+        <div>{timeTableData[cellInfo.index][cellInfo.column.id][2] || 'Not Set'}</div>
+        <br />
+      </div>
+    );
   }
 
   componentWillMount() {
@@ -87,19 +163,20 @@ class App extends React.Component {
   }
 
   renderLi() {
-    const { data } = this.state;
+    const { data, teachers, rooms } = this.state;
     if (data === 'teachers') {
-      return Object.keys(this.state.teachers)
+      return Object.keys(teachers)
         .map(key => (<RenderData
           data={data}
           key={key}
           index={key}
           state={this.state}
           removeData={this.removeData}
-        />),
+          clickHandler={this.dialogOpen}
+        />)
       );
     }
-    return Object.keys(this.state.rooms)
+    return Object.keys(rooms)
       .map(key =>
         (<RenderData
           data={data}
@@ -107,12 +184,47 @@ class App extends React.Component {
           index={key}
           state={this.state}
           removeData={this.removeData}
-        />),
+          clickHandler={this.dialogOpen}
+        />)
     );
   }
 
+  
+
+  dialogOpen(index){
+    this.setState({ dialogOpen: true, index });
+    this.setState({ timeTableContent: generateTT() });
+  }
+  
+  dialogClose(index){
+    this.setState({ dialogOpen: false });
+  }
+
+  paperTitle(){
+    if(this.state.data==="teachers")
+      return "Teacher's Name: ";
+    else
+      return "Room Number: ";
+  }
+
+  name(){
+    let data;
+    const { teachers, rooms, index } = this.state;
+    const value = this.state.data;
+    if (value === 'teachers') {
+      data = teachers[index];
+    } else {
+      data = rooms[index];
+    }
+    data = data || {
+      name:""
+    };
+    return data.name;
+  }
+
   render() {
-    const { data } = this.state;
+    const { data , dialogOpen, timeTableData } = this.state;
+    const { classes } = this.props;
     return (
       <div>
         <Card style={{ width: '35%', margin: 20, marginLeft: 430 }}>
@@ -123,9 +235,57 @@ class App extends React.Component {
             <List style={{margin: 20}}>{this.renderLi()}</List>
           </CardContent>
         </Card>
+        <Dialog
+          fullScreen
+          open={ dialogOpen }
+          transition={ <Slide direction="up" /> }
+          onRequestClose={ this.dialogClose }
+        >
+          <AppBar className={ classes.appBar } >
+            <Toolbar>
+              <IconButton color="contrast" onClick={ this.dialogClose } aria-label="Close" >
+                <CloseIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+
+          <Paper style={{ margin: '20px', padding: '20px' }} elevation={ 2 } square>
+            <Typography type="title">
+              { this.paperTitle() }
+              <span className={ classes.ttinfo }> { this.name() }
+              </span>
+            </Typography>
+          </Paper>
+
+          <div className="table-wrap" style={{ margin: '20px' }}>
+            <ReactTable
+              data={timeTableData}
+              columns={this.columns}
+              defaultPageSize={6}
+              showPageSizeOptions={false}
+              showPagination={false}
+            />
+          </div>
+        </Dialog>
       </div>
     );
   }
 }
 
-export default App;
+const styleSheet = createStyleSheet('AddTeachersRooms', {
+  appBar: {
+    position: 'relative',
+    backgroundColor: colors.pinkDark,
+  },
+  ttinfo: {
+    color: 'grey',
+    paddingRight: '250px',
+  },
+});
+
+AddTeacherRooms.propTypes = {
+  classes: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
+};
+
+export default withStyles(styleSheet)(AddTeacherRooms);

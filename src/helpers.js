@@ -20,7 +20,6 @@ const generateTT = (item, name) => {
       });
     });
 
-    console.log(generatedTT);
     return generatedTT;
   });
 };

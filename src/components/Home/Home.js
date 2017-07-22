@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { Header, Navbar, AddTimeTable, AddTeachersRooms, SavedTimeTables } from '../../components/';
 import ComponentWrappers from '../../ComponentWrappers';
 
@@ -11,13 +11,13 @@ class Home extends Component {
       <div>
         <Header />
         <Navbar />
-        <Switch>
+        {/*<Switch>*/}
           <Route exact path="/" component={welcome} />
           <Route path="/addnew" component={AddTimeTable} />
-          <Route path="/saved" component={SavedTimeTables} />
+          <Route exact path="/saved" component={SavedTimeTables} />
           <Route exact path="/teachers" component={AddTeachersRooms} />
           <Route exact path="/rooms" component={AddTeachersRooms} />
-        </Switch>
+        {/*</Switch>*/}
       </div>
     );
   }
