@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
-import InputBox from './InputBox';
-import base from '../../re-base';
-import RenderData from './RenderData';
 import Card, { CardContent } from 'material-ui/Card';
 import List from 'material-ui/List';
-import Dialog from "material-ui/Dialog";
+import Dialog from 'material-ui/Dialog';
 import Slide from 'material-ui/transitions/Slide';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
-import Paper from "material-ui/Paper";
-import Typography from "material-ui/Typography";
-import 'react-table/react-table.css';
+import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
 import ReactTable from 'react-table';
 import { createStyleSheet, withStyles } from 'material-ui/styles';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+import 'react-table/react-table.css';
 
-import { generateTT } from "./../../helpers";
+import RenderData from './RenderData';
+import InputBox from './InputBox';
+import base from '../../re-base';
 import colors from './../../colors';
 import './../AddTimeTable/react-table.css';
 import { emptyStarterTimeTable } from '../../constants';
@@ -27,24 +26,13 @@ class AddTeacherRooms extends Component {
   constructor(props) {
     super(props);
 
-    this.addTeacher = this.addTeacher.bind(this);
-    this.addRoom = this.addRoom.bind(this);
-    this.renderLi = this.renderLi.bind(this);
-    this.removeData = this.removeData.bind(this);
-    this.removeRoom = this.removeRoom.bind(this);
-    this.removeTeacher = this.removeTeacher.bind(this);
-    this.dialogOpen = this.dialogOpen.bind(this);
-    this.dialogClose = this.dialogClose.bind(this);
-    this.name = this.name.bind(this);
-    this.renderCells = this.renderCells.bind(this);
-
     this.state = {
       teachers: {},
       rooms: {},
       data: (this.props.match.path).slice(1),
-      dialogOpen:false,
+      dialogOpen: false,
       index: -1,
-      timeTableData: emptyStarterTimeTable
+      timeTableData: emptyStarterTimeTable,
     };
 
     this.columns = [
@@ -86,21 +74,8 @@ class AddTeacherRooms extends Component {
     ];
   }
 
-  renderCells(cellInfo) {
-    const { timeTableData } = this.state;
-    return (
-      <div style={{ backgroundColor: '#fafafa' }} >
-        <div>{timeTableData[cellInfo.index][cellInfo.column.id][0] || 'Not Set'}</div>
-        <br />
-        <div>{timeTableData[cellInfo.index][cellInfo.column.id][1] || 'Not Set'}</div>
-        <br />
-        <div>{timeTableData[cellInfo.index][cellInfo.column.id][2] || 'Not Set'}</div>
-        <br />
-      </div>
-    );
-  }
 
-  componentWillMount() {
+  componentWillMount = () => {
     this.ref1 = base.syncState('teachers', {
       context: this,
       state: 'teachers',
@@ -121,28 +96,28 @@ class AddTeacherRooms extends Component {
     }
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate = (nextProps, nextState) => {
     localStorage.setItem('data', JSON.stringify(nextState));
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     base.removeBinding(this.ref1.endpoint);
     base.removeBinding(this.ref2.endpoint);
   }
 
-  addTeacher(data) {
+  addTeacher = (data) => {
     const teachers = { ...this.state.teachers };
     teachers[`teacher-${Date.now()}`] = data;
     this.setState({ teachers });
   }
 
-  addRoom(data) {
+  addRoom = (data) => {
     const rooms = { ...this.state.rooms };
     rooms[`room-${Date.now()}`] = data;
     this.setState({ rooms });
   }
 
-  removeData(key) {
+  removeData = (key) => {
     if (this.state.data === 'teachers') {
       this.removeTeacher(key);
     } else {
@@ -150,19 +125,100 @@ class AddTeacherRooms extends Component {
     }
   }
 
-  removeTeacher(key) {
+  removeTeacher = (key) => {
     const teachers = { ...this.state.teachers };
     teachers[key] = null;
     this.setState({ teachers });
   }
 
-  removeRoom(key) {
+  removeRoom = (key) => {
     const rooms = { ...this.state.rooms };
     rooms[key] = null;
     this.setState({ rooms });
   }
 
-  renderLi() {
+  generateTT = (item, name) => {
+    const selector = item === 'teachers' ? 1 : 2;
+    const selector2 = item === 'teachers' ? 2 : 1;
+
+    base.fetch('timeTables', {
+      context: this,
+      asArray: true,
+    }).then((data) => {
+      const generatedTT = [
+        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
+        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
+        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
+        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
+        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
+        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
+        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
+      ];
+
+      data.forEach((timeTable) => {
+        timeTable.data.forEach((row, index) => {
+          Object.keys(row).forEach((keys) => {
+            if (row[keys][selector] === name) {
+              generatedTT[index][keys] = [timeTable.classInfo, row[keys][0], row[keys][selector2]];
+            }
+          });
+        });
+      });
+
+      this.setState({
+        dialogOpen: true,
+        index: name,
+        timeTableData: generatedTT,
+      });
+      return generatedTT;
+    });
+  };
+
+  dialogOpen = (index) => {
+    this.generateTT(this.state.data, this.state[this.state.data][index].name);
+  }
+
+  dialogClose = () => {
+    this.setState({ dialogOpen: false });
+  }
+
+  paperTitle = () => {
+    if (this.state.data === 'teachers') {
+      return `Teacher's Name: ${this.state.index}`;
+    }
+    return `Room Number: ${this.state.index}`;
+  }
+
+  name = () => {
+    let data;
+    const { teachers, rooms, index } = this.state;
+    const value = this.state.data;
+    if (value === 'teachers') {
+      data = teachers[index];
+    } else {
+      data = rooms[index];
+    }
+    data = data || {
+      name: '',
+    };
+    return data.name;
+  }
+
+  renderCells = (cellInfo) => {
+    const { timeTableData } = this.state;
+    return (
+      <div style={{ backgroundColor: '#fafafa' }} >
+        <div>{timeTableData[cellInfo.index][cellInfo.column.id][0] || 'Not Set'}</div>
+        <br />
+        <div>{timeTableData[cellInfo.index][cellInfo.column.id][1] || 'Not Set'}</div>
+        <br />
+        <div>{timeTableData[cellInfo.index][cellInfo.column.id][2] || 'Not Set'}</div>
+        <br />
+      </div>
+    );
+  }
+
+  renderLi = () => {
     const { data, teachers, rooms } = this.state;
     if (data === 'teachers') {
       return Object.keys(teachers)
@@ -173,9 +229,10 @@ class AddTeacherRooms extends Component {
           state={this.state}
           removeData={this.removeData}
           clickHandler={this.dialogOpen}
-        />)
+        />),
       );
     }
+
     return Object.keys(rooms)
       .map(key =>
         (<RenderData
@@ -185,74 +242,43 @@ class AddTeacherRooms extends Component {
           state={this.state}
           removeData={this.removeData}
           clickHandler={this.dialogOpen}
-        />)
+        />),
     );
   }
 
-  
-
-  dialogOpen(index){
-    this.setState({ dialogOpen: true, index });
-    this.setState({ timeTableContent: generateTT() });
-  }
-  
-  dialogClose(index){
-    this.setState({ dialogOpen: false });
-  }
-
-  paperTitle(){
-    if(this.state.data==="teachers")
-      return "Teacher's Name: ";
-    else
-      return "Room Number: ";
-  }
-
-  name(){
-    let data;
-    const { teachers, rooms, index } = this.state;
-    const value = this.state.data;
-    if (value === 'teachers') {
-      data = teachers[index];
-    } else {
-      data = rooms[index];
-    }
-    data = data || {
-      name:""
-    };
-    return data.name;
-  }
-
   render() {
-    const { data , dialogOpen, timeTableData } = this.state;
+    const { data, dialogOpen, timeTableData } = this.state;
     const { classes } = this.props;
     return (
       <div>
+
         <Card style={{ width: '35%', margin: 20, marginLeft: 430 }}>
           <CardContent>
-            <h1 style={{marginLeft: 150 }}>{data}</h1>
-            <hr></hr>
+            <h1 style={{ marginLeft: 150 }}>{data}</h1>
+            <hr />
             <InputBox addTeacher={this.addTeacher} addRoom={this.addRoom} data={data} />
-            <List style={{margin: 20}}>{this.renderLi()}</List>
+            <List style={{ margin: 20 }}>{this.renderLi()}</List>
           </CardContent>
         </Card>
+
         <Dialog
           fullScreen
-          open={ dialogOpen }
-          transition={ <Slide direction="up" /> }
-          onRequestClose={ this.dialogClose }
+          open={dialogOpen}
+          transition={<Slide direction="up" />}
+          onRequestClose={this.dialogClose}
         >
-          <AppBar className={ classes.appBar } >
+          <AppBar className={classes.appBar} >
             <Toolbar>
-              <IconButton color="contrast" onClick={ this.dialogClose } aria-label="Close" >
+              <IconButton color="contrast" onClick={this.dialogClose} aria-label="Close" >
                 <CloseIcon />
               </IconButton>
             </Toolbar>
           </AppBar>
 
-          <Paper style={{ margin: '20px', padding: '20px' }} elevation={ 2 } square>
+          <Paper style={{ margin: '20px', padding: '20px' }} elevation={2} square>
             <Typography type="title">
-              { this.paperTitle() }
-              <span className={ classes.ttinfo }> { this.name() }
+              {this.paperTitle()}
+              <span className={classes.ttinfo}> {this.name()}
               </span>
             </Typography>
           </Paper>
@@ -266,6 +292,7 @@ class AddTeacherRooms extends Component {
               showPagination={false}
             />
           </div>
+
         </Dialog>
       </div>
     );
@@ -285,7 +312,7 @@ const styleSheet = createStyleSheet('AddTeachersRooms', {
 
 AddTeacherRooms.propTypes = {
   classes: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
 };
 
 export default withStyles(styleSheet)(AddTeacherRooms);

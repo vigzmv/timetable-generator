@@ -13,7 +13,15 @@ class RenderData extends React.Component {
     }
     const removeButton = <button onClick={() => removeData(index)}> &times;</button>;
     return (
-      <ListItem button onClick={ () => clickHandler(index) } ><ListItemText primary={data.name} /><span>{removeButton}</span></ListItem>
+      <ListItem
+        button
+        onClick={() => clickHandler(index)}
+      >
+        <ListItemText primary={data.name} />
+        <span>
+          {removeButton}
+        </span>
+      </ListItem>
     );
   }
 }

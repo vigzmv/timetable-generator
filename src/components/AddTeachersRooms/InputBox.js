@@ -35,12 +35,12 @@ class InputBox extends React.Component {
     return (
 
       <form ref={input => this.inputForm = input} onSubmit={this.createData} >
-          <TextField
-            style={{ width: '50%', marginLeft: 50 }}
-            ref={input => this.name = input}
-            type="text"
-            label={placeholderValue}
-          />
+        <TextField
+          style={{ width: '50%', marginLeft: 50 }}
+          ref={input => this.name = input}
+          type="text"
+          label={placeholderValue}
+        />
         <Button style={{ marginLeft: 10 }} raised type="submit" color="accent">Add</Button>
       </form>
     );

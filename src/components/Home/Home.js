@@ -11,14 +11,12 @@ class Home extends Component {
       <div>
         <Header />
         <Navbar />
-        {/*<Switch>*/}
-          <Route exact path="/" component={welcome} />
-          <Route exact path="/addnew" component={AddTimeTable} />
-          <Route exact path="/addnew/:key" component={AddTimeTable} />
-          <Route exact path="/saved" component={SavedTimeTables} />
-          <Route exact path="/teachers" component={AddTeachersRooms} />
-          <Route exact path="/rooms" component={AddTeachersRooms} />
-        {/*</Switch>*/}
+        <Route exact path="/" component={welcome} />
+        <Route exact path="/addnew" component={AddTimeTable} />
+        <Route exact path="/addnew/:key" component={AddTimeTable} />
+        <Route exact path="/saved" component={SavedTimeTables} />
+        <Route exact path="/teachers" component={AddTeachersRooms} />
+        <Route exact path="/rooms" component={AddTeachersRooms} />
       </div>
     );
   }
