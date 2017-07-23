@@ -21,10 +21,12 @@ class AddTimeTable extends PureComponent {
 
     this.state = {
       data: emptyStarterTimeTable,
-
+      completeteTT: null,
       classInfo: '',
       semester: '',
       shift: '',
+      teachers: null,
+      rooms: null,
     };
 
     this.columns = [
@@ -70,12 +72,13 @@ class AddTimeTable extends PureComponent {
   componentWillMount() {
     const key = this.props.location.pathname.split('/')[2];
 
+    this.fetchAllBase();
+
     base.fetch(`timeTables/${key}`, {
       context: this,
       asArray: true,
     }).then((data) => {
-      // eslint-disable-next-line
-      if (data.length != 0) {
+      if (data.length !== 0) {
         this.setState(
           {
             classInfo: data[0],
@@ -107,6 +110,44 @@ class AddTimeTable extends PureComponent {
     });
   }
 
+  fetchAllBase = () => {
+    base.fetch('timeTables', {
+      context: this,
+      asArray: true,
+    }).then((data) => {
+      this.setState({
+        completeteTT: data,
+      },
+        () => console.log(data, 'ss'));
+    });
+
+    base.fetch('teachers', {
+      context: this,
+      asArray: true,
+    }).then((data) => {
+      this.setState({
+        teachers: data,
+      });
+    });
+
+    base.fetch('rooms', {
+      context: this,
+      asArray: true,
+    }).then((data) => {
+      this.setState({
+        rooms: data,
+      });
+    });
+  }
+
+  // the supercomplex func;
+  getAvailableOptions = (cellInfo, item) => this.state[item]
+    .map(op => op.name)
+    .map(name => (this.state.completeteTT
+      .map(timeTable => timeTable.data[cellInfo.index][cellInfo.column.id][item === 'teachers' ? 1 : 2])
+      .includes(name)) ? <option disabled>{name}</option> : <option>{name}</option>)
+
+
   renderEditable(cellInfo) {
     return (
       <div
@@ -131,8 +172,7 @@ class AddTimeTable extends PureComponent {
             this.setState({ data });
           }}
         >
-          <option>Not Set</option>
-          <option>s</option>
+          {this.getAvailableOptions(cellInfo, 'teachers')}
         </select>
         <br />
 
@@ -144,7 +184,7 @@ class AddTimeTable extends PureComponent {
             this.setState({ data });
           }}
         >
-          <option>Not Set</option>
+          {this.getAvailableOptions(cellInfo, 'rooms')}
         </select>
       </div >
     );
@@ -154,6 +194,10 @@ class AddTimeTable extends PureComponent {
     const { classes } = this.props;
     const { data, classInfo, semester, shift } = this.state;
     console.dir(' Boom!! Render Bomb!!');
+
+    if (!(this.state.completeteTT && this.state.teachers && this.state.rooms)) {
+      return <div>Loading..</div>;
+    }
 
     return (
       <form onSubmit={this.pushTimeTableInfo} ref={input => this.timeTableForm = input} >
