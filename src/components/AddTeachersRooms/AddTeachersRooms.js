@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+import PropTypes from 'prop-types';
+
 import Card, { CardContent } from 'material-ui/Card';
 import List from 'material-ui/List';
 import Dialog from 'material-ui/Dialog';
@@ -9,10 +13,7 @@ import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
-import ReactTable from 'react-table';
 import { createStyleSheet, withStyles } from 'material-ui/styles';
-import PropTypes from 'prop-types';
-import 'react-table/react-table.css';
 
 import RenderData from './RenderData';
 import InputBox from './InputBox';
@@ -170,7 +171,6 @@ class AddTeacherRooms extends Component {
         index: name,
         timeTableData: generatedTT,
       });
-      return generatedTT;
     });
   };
 
@@ -182,12 +182,10 @@ class AddTeacherRooms extends Component {
     this.setState({ dialogOpen: false });
   }
 
-  paperTitle = () => {
-    if (this.state.data === 'teachers') {
-      return `Teacher's Name: ${this.state.index}`;
-    }
-    return `Room Number: ${this.state.index}`;
-  }
+  paperTitle = () =>
+    this.state.data === 'teachers'
+      ? `Teacher's Name: ${this.state.index}`
+      : `Room Number: ${this.state.index}`
 
   name = () => {
     let data;
@@ -220,30 +218,21 @@ class AddTeacherRooms extends Component {
 
   renderLi = () => {
     const { data, teachers, rooms } = this.state;
+    const render = key => (<RenderData
+      data={data}
+      key={key}
+      index={key}
+      state={this.state}
+      removeData={this.removeData}
+      clickHandler={this.dialogOpen}
+    />);
+
     if (data === 'teachers') {
       return Object.keys(teachers)
-        .map(key => (<RenderData
-          data={data}
-          key={key}
-          index={key}
-          state={this.state}
-          removeData={this.removeData}
-          clickHandler={this.dialogOpen}
-        />),
-      );
+        .map(render);
     }
-
     return Object.keys(rooms)
-      .map(key =>
-        (<RenderData
-          data={data}
-          key={key}
-          index={key}
-          state={this.state}
-          removeData={this.removeData}
-          clickHandler={this.dialogOpen}
-        />),
-    );
+      .map(render);
   }
 
   render() {

@@ -89,7 +89,38 @@ class AddTimeTable extends PureComponent {
       }
       this.forceUpdate();
     }).catch((error) => {
-      console.log(error);
+      window.console.log(error);
+    });
+  }
+
+  // the supercomplex func;
+  getAvailableOptions = (cellInfo, item) => this.state[item]
+    .map(op => op.name)
+    .map(name => (this.state.completeteTT
+      .map(timeTable => timeTable.data[cellInfo.index][cellInfo.column.id][item === 'teachers' ? 1 : 2])
+      .includes(name)) ? <option disabled>{name}</option> : <option>{name}</option>)
+
+
+  fetchAllBase = () => {
+    base.fetch('timeTables', {
+      context: this,
+      asArray: true,
+    }).then((data) => {
+      this.setState({ completeteTT: data });
+    });
+
+    base.fetch('teachers', {
+      context: this,
+      asArray: true,
+    }).then((data) => {
+      this.setState({ teachers: data });
+    });
+
+    base.fetch('rooms', {
+      context: this,
+      asArray: true,
+    }).then((data) => {
+      this.setState({ rooms: data });
     });
   }
 
@@ -109,44 +140,6 @@ class AddTimeTable extends PureComponent {
       },
     });
   }
-
-  fetchAllBase = () => {
-    base.fetch('timeTables', {
-      context: this,
-      asArray: true,
-    }).then((data) => {
-      this.setState({
-        completeteTT: data,
-      },
-        () => console.log(data, 'ss'));
-    });
-
-    base.fetch('teachers', {
-      context: this,
-      asArray: true,
-    }).then((data) => {
-      this.setState({
-        teachers: data,
-      });
-    });
-
-    base.fetch('rooms', {
-      context: this,
-      asArray: true,
-    }).then((data) => {
-      this.setState({
-        rooms: data,
-      });
-    });
-  }
-
-  // the supercomplex func;
-  getAvailableOptions = (cellInfo, item) => this.state[item]
-    .map(op => op.name)
-    .map(name => (this.state.completeteTT
-      .map(timeTable => timeTable.data[cellInfo.index][cellInfo.column.id][item === 'teachers' ? 1 : 2])
-      .includes(name)) ? <option disabled>{name}</option> : <option>{name}</option>)
-
 
   renderEditable(cellInfo) {
     return (
@@ -193,7 +186,7 @@ class AddTimeTable extends PureComponent {
   render() {
     const { classes } = this.props;
     const { data, classInfo, semester, shift } = this.state;
-    console.dir(' Boom!! Render Bomb!!');
+    window.console.dir(' Boom!! Render Bomb!!');
 
     if (!(this.state.completeteTT && this.state.teachers && this.state.rooms)) {
       return <div>Loading..</div>;

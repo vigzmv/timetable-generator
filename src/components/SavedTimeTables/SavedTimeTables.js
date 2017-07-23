@@ -87,7 +87,7 @@ class SavedTimeTables extends Component {
     }).then((data) => {
       this.setState({ data });
     }).catch((error) => {
-      console.log(error);
+      window.console.log(error);
     });
   }
 
@@ -112,7 +112,7 @@ class SavedTimeTables extends Component {
       this.props.history.push('/saved');
       this.forceUpdate();
     }).catch((error) => {
-      console.log(error);
+      window.console.log(error);
     });
   }
 
