@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
@@ -54,9 +55,11 @@ function Header(props) {
 
           <Button>
             <Home className={classes.icon} aria-label="home" />
-            <Typography type="caption" className={classes.settings}>
-              &nbsp;Home
+            <Link to={'/'} style={{ textDecoration: 'none' }} >
+              <Typography type="caption" className={classes.settings}>
+                &nbsp;Home
             </Typography>
+            </Link>
           </Button>
 
           <Typography

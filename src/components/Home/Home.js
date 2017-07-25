@@ -4,8 +4,6 @@ import { Welcome, Header, Navbar, AddTimeTable, AddTeachersRooms, SavedTimeTable
 import ComponentWrappers from '../../ComponentWrappers';
 
 
-const welcome = () => <h3>Welcome to TT</h3>;
-
 class Home extends Component {
   render() {
     return (
