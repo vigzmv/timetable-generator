@@ -4,6 +4,7 @@ import { createStyleSheet, withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
+import Card, { CardContent } from 'material-ui/Card';
 import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
@@ -194,44 +195,49 @@ class AddTimeTable extends PureComponent {
 
     return (
       <form onSubmit={this.pushTimeTableInfo} ref={input => this.timeTableForm = input} >
-        <div className={classes.form} >
-          <FormLabel htmlFor="time-table-info">
-            <Typography type="display2" >&nbsp;Time Table Info</Typography>
-          </FormLabel>
+        <Card style={{ width: '80%', margin: 20, marginLeft: '10%' }}>
+          <CardContent>
+            <div className={classes.form} >
+              <FormLabel htmlFor="time-table-info">
+                <Typography type="display2" >&nbsp;TIMETABLE INFORMATION</Typography>
+                <br />
+              </FormLabel>
 
-          <FormGroup id="time-table-info" >
-            <FormControl>
-              <TextField
-                required
-                id="classInfo"
-                label="ClassInfo"
-                onChange={e => this.setState({ classInfo: e.target.value })}
-                className={classes.input}
-                marginForm
-                value={classInfo || ''}
-              />
-              <TextField
-                required
-                id="semester"
-                label="Semester"
-                onChange={e => this.setState({ semester: e.target.value })}
-                className={classes.input}
-                marginForm
-                value={semester || ''}
-              />
-              <TextField
-                required
-                id="shift"
-                label="Shift"
-                onChange={e => this.setState({ shift: e.target.value })}
-                className={classes.input}
-                marginForm
-                value={shift || ''}
-              />
-            </FormControl>
-          </FormGroup>
+              <FormGroup id="time-table-info" >
+                <FormControl>
+                  <TextField
+                    required
+                    id="classInfo"
+                    label="ClassInfo"
+                    onChange={e => this.setState({ classInfo: e.target.value })}
+                    className={classes.input}
+                    marginForm
+                    value={classInfo || ''}
+                  />
+                  <TextField
+                    required
+                    id="semester"
+                    label="Semester"
+                    onChange={e => this.setState({ semester: e.target.value })}
+                    className={classes.input}
+                    marginForm
+                    value={semester || ''}
+                  />
+                  <TextField
+                    required
+                    id="shift"
+                    label="Shift"
+                    onChange={e => this.setState({ shift: e.target.value })}
+                    className={classes.input}
+                    marginForm
+                    value={shift || ''}
+                  />
+                </FormControl>
+              </FormGroup>
 
-        </div>
+            </div>
+          </CardContent>
+        </Card>
         <div className="table-wrap" style={{ margin: '20px' }}>
           <ReactTable
             data={data}
