@@ -131,6 +131,10 @@ class AddTimeTable extends PureComponent {
     const self = this;
     const key = this.props.location.pathname.split('/')[2];
 
+    delete this.state.completeteTT;
+    delete this.state.teachers;
+    delete this.state.rooms;
+
     base.post(`timeTables/${key || Date.now()}`, {
       data: this.state,
       then(err) {
@@ -159,25 +163,27 @@ class AddTimeTable extends PureComponent {
         <br />
 
         <select
-          value={this.state.data[cellInfo.index][cellInfo.column.id][1]}
+          value={this.state.data[cellInfo.index][cellInfo.column.id][1] || 'Not Set'}
           onChange={(e) => {
             const data = [...this.state.data];
             data[cellInfo.index][cellInfo.column.id][1] = e.target.value;
             this.setState({ data });
           }}
         >
+          <option>Not Set</option>
           {this.getAvailableOptions(cellInfo, 'teachers')}
         </select>
         <br />
 
         <select
-          value={this.state.data[cellInfo.index][cellInfo.column.id][2]}
+          value={this.state.data[cellInfo.index][cellInfo.column.id][2] || 'Not Set'}
           onChange={(e) => {
             const data = [...this.state.data];
             data[cellInfo.index][cellInfo.column.id][2] = e.target.value;
             this.setState({ data });
           }}
         >
+          <option>Not Set</option>
           {this.getAvailableOptions(cellInfo, 'rooms')}
         </select>
       </div >
