@@ -241,9 +241,9 @@ class AddTeacherRooms extends Component {
     return (
       <div>
 
-        <Card style={{ width: '35%', margin: 20, marginLeft: 430 }}>
+        <Card style={{ width: '35%', margin: 20, marginLeft: '32.5%' }}>
           <CardContent>
-            <h1 style={{ marginLeft: 150 }}>{data}</h1>
+            <Typography type="display2" style={{ marginLeft: '30%'}}>{data}</Typography>
             <hr />
             <InputBox addTeacher={this.addTeacher} addRoom={this.addRoom} data={data} />
             <List style={{ margin: 20 }}>{this.renderLi()}</List>
