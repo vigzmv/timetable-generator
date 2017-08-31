@@ -1,5 +1,7 @@
 import React from 'react';
 import { ListItem, ListItemText } from 'material-ui/List';
+import IconButton from 'material-ui/IconButton';
+import DeleteIcon from 'material-ui-icons/Delete';
 
 class RenderData extends React.Component {
   render() {
@@ -11,7 +13,7 @@ class RenderData extends React.Component {
     } else {
       data = state.rooms[index];
     }
-    const removeButton = <button onClick={() => removeData(index)}> &times;</button>;
+    const removeButton = <IconButton aria-label="Delete" onClick={ () => removeData(index)} ><DeleteIcon /></IconButton>;
     return (
       <ListItem
         button
