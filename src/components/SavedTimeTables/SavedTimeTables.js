@@ -137,7 +137,7 @@ class SavedTimeTables extends Component {
     return (
       <Grid container className={classes.container} >
         <Grid item >
-          <Typography type="title" className={classes.title} >Time Tables</Typography>
+          <Typography type="title" className={classes.title} >Saved Time Tables</Typography>
           <div>
             <TimeTablelList data={data} clickHandler={this.dialogOpen} />
 

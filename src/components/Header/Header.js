@@ -53,14 +53,14 @@ function Header(props) {
       <AppBar position="static" className={classes.header}>
         <Toolbar className={classes.bar}>
 
-          <Button>
-            <Home className={classes.icon} aria-label="home" />
-            <Link to={'/'} style={{ textDecoration: 'none' }} >
+          <Link to={'/'} style={{ textDecoration: 'none' }} >
+            <Button>
+              <Home className={classes.icon} aria-label="home" />
               <Typography type="caption" className={classes.settings}>
                 &nbsp;Home
             </Typography>
-            </Link>
-          </Button>
+            </Button>
+          </Link>
 
           <Typography
             color="inherit"

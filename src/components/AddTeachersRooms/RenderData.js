@@ -1,7 +1,6 @@
 import React from 'react';
 import { ListItem, ListItemText } from 'material-ui/List';
-import IconButton from 'material-ui/IconButton';
-import DeleteIcon from 'material-ui-icons/Delete';
+import Typography from 'material-ui/Typography';
 
 class RenderData extends React.Component {
   render() {
@@ -13,13 +12,15 @@ class RenderData extends React.Component {
     } else {
       data = state.rooms[index];
     }
-    const removeButton = <IconButton aria-label="Delete" onClick={ () => removeData(index)} ><DeleteIcon /></IconButton>;
+    const removeButton = <button onClick={() => removeData(index)}> <Typography type="button" >&times;</Typography></button>;
     return (
       <ListItem
         button
-        onClick={() => clickHandler(index)}
       >
-        <ListItemText primary={data.name} />
+        <ListItemText
+          primary={data.name}
+          onClick={() => clickHandler(index)}
+        />
         <span>
           {removeButton}
         </span>
