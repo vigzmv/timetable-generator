@@ -6,20 +6,29 @@ import Divider from 'material-ui/Divider';
 class TimeTablelList extends Component {
   render() {
     const { data, clickHandler } = this.props;
+    console.log(data[0]);
+    if (Object.keys(data[0]).length === 0) {
+      return (<List>
+        <ListItem button>
+          No Timetables Saved
+        </ListItem>
+      </List>);
+    }
 
     return (
       <List>
-        {data.map((item, index) => (<div key={index} onClick={clickHandler.bind(this, index)} >
-          <ListItem button >
-            <ListItemText
-              primary={`${item.classInfo} ${item.semester}`}
-              secondary={`${item.shift} shift`}
-            />
-          </ListItem>
+        {data.map((item, index) => (
+          <div key={index} onClick={clickHandler.bind(this, index)} >
+            <ListItem button >
+              <ListItemText
+                primary={`${item.classInfo} ${item.semester}`}
+                secondary={`${item.shift} shift`}
+              />
+            </ListItem>
 
-          <Divider light />
+            <Divider light />
 
-        </div>
+          </div>
         ), this)}
       </List>
     );

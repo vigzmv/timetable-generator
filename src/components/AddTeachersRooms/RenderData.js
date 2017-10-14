@@ -1,5 +1,6 @@
 import React from 'react';
 import { ListItem, ListItemText } from 'material-ui/List';
+import Typography from 'material-ui/Typography';
 
 class RenderData extends React.Component {
   render() {
@@ -11,13 +12,15 @@ class RenderData extends React.Component {
     } else {
       data = state.rooms[index];
     }
-    const removeButton = <button onClick={() => removeData(index)}> &times;</button>;
+    const removeButton = <button onClick={() => removeData(index)}> <Typography type="button" >&times;</Typography></button>;
     return (
       <ListItem
         button
-        onClick={() => clickHandler(index)}
       >
-        <ListItemText primary={data.name} />
+        <ListItemText
+          primary={data.name}
+          onClick={() => clickHandler(index)}
+        />
         <span>
           {removeButton}
         </span>

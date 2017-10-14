@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
 
 
 class InputBox extends React.Component {
@@ -35,7 +34,7 @@ class InputBox extends React.Component {
     return (
 
       <form ref={input => this.inputForm = input} onSubmit={this.createData} >
-        <TextField
+        <input
           style={{ width: '50%', marginLeft: 50 }}
           ref={input => this.name = input}
           type="text"

@@ -4,7 +4,7 @@ import { createStyleSheet, withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import Card, { CardContent } from 'material-ui/Card';
+import Card from 'material-ui/Card';
 import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
@@ -69,61 +69,80 @@ class AddTimeTable extends PureComponent {
     ];
   }
 
-
   componentWillMount() {
     const key = this.props.location.pathname.split('/')[2];
 
     this.fetchAllBase();
 
-    base.fetch(`timeTables/${key}`, {
-      context: this,
-      asArray: true,
-    }).then((data) => {
-      if (data.length !== 0) {
-        this.setState(
-          {
+    base
+      .fetch(`timeTables/${key}`, {
+        context: this,
+        asArray: true,
+      })
+      .then((data) => {
+        if (data.length !== 0) {
+          this.setState({
             classInfo: data[0],
             data: data[1],
             shift: data[2],
             semester: data[3],
           });
-      }
-      this.forceUpdate();
-    }).catch((error) => {
-      window.console.log(error);
-    });
+        }
+        this.forceUpdate();
+      })
+      .catch((error) => {
+        window.console.log(error);
+      });
   }
 
   // the supercomplex func;
-  getAvailableOptions = (cellInfo, item) => this.state[item]
-    .map(op => op.name)
-    .map(name => (this.state.completeteTT
-      .map(timeTable => timeTable.data[cellInfo.index][cellInfo.column.id][item === 'teachers' ? 1 : 2])
-      .includes(name)) ? <option disabled>{name}</option> : <option>{name}</option>)
-
+  getAvailableOptions = (cellInfo, item) =>
+    this.state[item]
+      .map(op => op.name)
+      .map(
+        name =>
+          this.state.completeteTT
+            .map(
+              timeTable =>
+                timeTable.data[cellInfo.index][cellInfo.column.id][
+                  item === 'teachers' ? 1 : 2
+                ],
+            )
+            .includes(name) ? (
+              <option disabled>{name}</option>
+          ) : (
+            <option>{name}</option>
+          ),
+      );
 
   fetchAllBase = () => {
-    base.fetch('timeTables', {
-      context: this,
-      asArray: true,
-    }).then((data) => {
-      this.setState({ completeteTT: data });
-    });
+    base
+      .fetch('timeTables', {
+        context: this,
+        asArray: true,
+      })
+      .then((data) => {
+        this.setState({ completeteTT: data });
+      });
 
-    base.fetch('teachers', {
-      context: this,
-      asArray: true,
-    }).then((data) => {
-      this.setState({ teachers: data });
-    });
+    base
+      .fetch('teachers', {
+        context: this,
+        asArray: true,
+      })
+      .then((data) => {
+        this.setState({ teachers: data });
+      });
 
-    base.fetch('rooms', {
-      context: this,
-      asArray: true,
-    }).then((data) => {
-      this.setState({ rooms: data });
-    });
-  }
+    base
+      .fetch('rooms', {
+        context: this,
+        asArray: true,
+      })
+      .then((data) => {
+        this.setState({ rooms: data });
+      });
+  };
 
   pushTimeTableInfo(event) {
     event.preventDefault();
@@ -148,9 +167,7 @@ class AddTimeTable extends PureComponent {
 
   renderEditable(cellInfo) {
     return (
-      <div
-        style={{ backgroundColor: '#fafafa' }}
-      >
+      <div style={{ backgroundColor: '#fafafa' }}>
         <input
           style={{ backgroundColor: '#fafafa' }}
           onChange={(e) => {
@@ -163,7 +180,9 @@ class AddTimeTable extends PureComponent {
         <br />
 
         <select
-          value={this.state.data[cellInfo.index][cellInfo.column.id][1] || 'Not Set'}
+          value={
+            this.state.data[cellInfo.index][cellInfo.column.id][1] || 'Not Set'
+          }
           onChange={(e) => {
             const data = [...this.state.data];
             data[cellInfo.index][cellInfo.column.id][1] = e.target.value;
@@ -176,7 +195,9 @@ class AddTimeTable extends PureComponent {
         <br />
 
         <select
-          value={this.state.data[cellInfo.index][cellInfo.column.id][2] || 'Not Set'}
+          value={
+            this.state.data[cellInfo.index][cellInfo.column.id][2] || 'Not Set'
+          }
           onChange={(e) => {
             const data = [...this.state.data];
             data[cellInfo.index][cellInfo.column.id][2] = e.target.value;
@@ -186,7 +207,7 @@ class AddTimeTable extends PureComponent {
           <option>Not Set</option>
           {this.getAvailableOptions(cellInfo, 'rooms')}
         </select>
-      </div >
+      </div>
     );
   }
 
@@ -200,50 +221,48 @@ class AddTimeTable extends PureComponent {
     }
 
     return (
-      <form onSubmit={this.pushTimeTableInfo} ref={input => this.timeTableForm = input} >
-        <Card style={{ width: '80%', margin: 20, marginLeft: '10%' }}>
-          <CardContent>
-            <div className={classes.form} >
-              <FormLabel htmlFor="time-table-info">
-                <Typography type="display2" >&nbsp;TIMETABLE INFORMATION</Typography>
-                <br />
-              </FormLabel>
+      <form
+        onSubmit={this.pushTimeTableInfo}
+        ref={input => (this.timeTableForm = input)}
+      >
+        <div className={classes.form}>
+          <FormLabel htmlFor="time-table-info">
+            <Typography type="display2">&nbsp;TIMETABLE INFORMATION</Typography>
+            <br />
+          </FormLabel>
 
-              <FormGroup id="time-table-info" >
-                <FormControl>
-                  <TextField
-                    required
-                    id="classInfo"
-                    label="ClassInfo"
-                    onChange={e => this.setState({ classInfo: e.target.value })}
-                    className={classes.input}
-                    marginForm
-                    value={classInfo || ''}
-                  />
-                  <TextField
-                    required
-                    id="semester"
-                    label="Semester"
-                    onChange={e => this.setState({ semester: e.target.value })}
-                    className={classes.input}
-                    marginForm
-                    value={semester || ''}
-                  />
-                  <TextField
-                    required
-                    id="shift"
-                    label="Shift"
-                    onChange={e => this.setState({ shift: e.target.value })}
-                    className={classes.input}
-                    marginForm
-                    value={shift || ''}
-                  />
-                </FormControl>
-              </FormGroup>
-
-            </div>
-          </CardContent>
-        </Card>
+          <FormGroup id="time-table-info">
+            <FormControl>
+              <TextField
+                required
+                id="classInfo"
+                label="ClassInfo"
+                onChange={e => this.setState({ classInfo: e.target.value })}
+                className={classes.input}
+                marginForm
+                value={classInfo || ''}
+              />
+              <TextField
+                required
+                id="semester"
+                label="Semester"
+                onChange={e => this.setState({ semester: e.target.value })}
+                className={classes.input}
+                marginForm
+                value={semester || ''}
+              />
+              <TextField
+                required
+                id="shift"
+                label="Shift"
+                onChange={e => this.setState({ shift: e.target.value })}
+                className={classes.input}
+                marginForm
+                value={shift || ''}
+              />
+            </FormControl>
+          </FormGroup>
+        </div>
         <div className="table-wrap" style={{ margin: '20px' }}>
           <ReactTable
             data={data}
@@ -253,8 +272,8 @@ class AddTimeTable extends PureComponent {
             showPagination={false}
           />
         </div>
-        <Button raised color="primary" type="submit" className={classes.button} >
-          <Typography type="button" >&nbsp;Save</Typography>
+        <Button raised color="primary" type="submit" className={classes.button}>
+          <Typography type="button">&nbsp;Save</Typography>
         </Button>
       </form>
     );
