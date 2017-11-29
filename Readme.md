@@ -1,31 +1,64 @@
 # Time-Table Generator
 
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=102)](https://github.com/vigzmv/timetable-generator)
+&nbsp;&nbsp;
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/vigzmv/timetable-generator)
+&nbsp;&nbsp;
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/vigzmv/timetable-generator)
+
 Auto timetable generator from list of Teachers, Classes and rooms.
 
 Build Using:
-- React
-- React-router
-- Firebase
-- Material Ui
 
-## Available Scripts
+* React
+* React-router
+* Firebase
+* re-base
+* Material Ui
 
-In the project directory, you can run:
+## Screenshots
 
-### `npm start`
+![Welcome Screen](./imgs/screen1.png) ![Time Table Screen](./imgs/screen2.png)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Run the App
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+#### Install the dependencies:
 
-### `npm run build`
+```sh
+yarn install || npm install
+```
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Run the development server:
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+```sh
+yarn start || npm start
+```
 
-See the section about [deployment](#deployment) for more information.
+Runs the app in the development mode.<br> Open
+[http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.<br> You will also see any lint errors in
+the console.
+
+#### Build the app for production
+
+```sh
+yarn build || npm build
+```
+
+Builds the app for production to the `docs` folder.<br> It correctly bundles
+React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br> Your app is
+ready to be deployed!
+
+## Contribute ?
+
+* Fork the repository
+* Commit your changes
+* Submit a pull request
+
+## Licence
+
+[MIT Licence](https://github.com/vigzmv/what_the_thing/blob/master/LICENSE) ©
+[Vignesh M](https://vigneshm.com)
