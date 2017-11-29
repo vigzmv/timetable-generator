@@ -56,7 +56,7 @@ class Navbar extends Component {
           <Tab label="Saved Teachers" />
           <Tab label="Saved Rooms" />
         </Tabs>
-      </Paper >
+      </Paper>
     );
   }
 }

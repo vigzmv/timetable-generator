@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import { Welcome, Header, Navbar, AddTimeTable, AddTeachersRooms, SavedTimeTables } from '../../components/';
+import {
+  Welcome,
+  Header,
+  Navbar,
+  AddTimeTable,
+  AddTeachersRooms,
+  SavedTimeTables,
+} from '../../components/';
 import ComponentWrappers from '../../ComponentWrappers';
-
 
 class Home extends Component {
   render() {

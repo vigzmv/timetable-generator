@@ -45,29 +45,22 @@ const styleSheet = createStyleSheet('Header', {
   },
 });
 
-
 function Header(props) {
   const classes = props.classes;
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.header}>
         <Toolbar className={classes.bar}>
-
-          <Link to={'/'} style={{ textDecoration: 'none' }} >
+          <Link to="/" style={{ textDecoration: 'none' }}>
             <Button>
               <Home className={classes.icon} aria-label="home" />
               <Typography type="caption" className={classes.settings}>
                 &nbsp;Home
-            </Typography>
+              </Typography>
             </Button>
           </Link>
 
-          <Typography
-            color="inherit"
-            className={classes.title}
-            gutterBottom
-            align="center"
-          >
+          <Typography color="inherit" className={classes.title} gutterBottom align="center">
             <AccessTime className={classes.time} />
             &nbsp;Time Table Generator
           </Typography>
@@ -77,9 +70,7 @@ function Header(props) {
             <Typography type="caption" className={classes.settings}>
               &nbsp;Settings
             </Typography>
-
           </Button>
-
         </Toolbar>
       </AppBar>
     </div>

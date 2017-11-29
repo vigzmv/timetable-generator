@@ -4,7 +4,6 @@ import { createStyleSheet, withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import Card from 'material-ui/Card';
 import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
@@ -99,21 +98,17 @@ class AddTimeTable extends PureComponent {
   getAvailableOptions = (cellInfo, item) =>
     this.state[item]
       .map(op => op.name)
-      .map(
-        name =>
-          this.state.completeteTT
-            .map(
-              timeTable =>
-                timeTable.data[cellInfo.index][cellInfo.column.id][
-                  item === 'teachers' ? 1 : 2
-                ],
-            )
-            .includes(name) ? (
-              <option disabled>{name}</option>
+      .map(name =>
+        (this.state.completeteTT
+          .map(timeTable =>
+            timeTable.data[cellInfo.index][cellInfo.column.id][
+              item === 'teachers' ? 1 : 2
+            ])
+          .includes(name) ? (
+            <option disabled>{name}</option>
           ) : (
             <option>{name}</option>
-          ),
-      );
+          )));
 
   fetchAllBase = () => {
     base
@@ -213,7 +208,9 @@ class AddTimeTable extends PureComponent {
 
   render() {
     const { classes } = this.props;
-    const { data, classInfo, semester, shift } = this.state;
+    const {
+      data, classInfo, semester, shift,
+    } = this.state;
     window.console.dir(' Boom!! Render Bomb!!');
 
     if (!(this.state.completeteTT && this.state.teachers && this.state.rooms)) {

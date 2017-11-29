@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
 
-
 class InputBox extends React.Component {
   constructor() {
     super();
@@ -22,7 +21,6 @@ class InputBox extends React.Component {
     this.inputForm.reset();
   }
 
-
   render() {
     let placeholderValue;
     if (this.props.data === 'rooms') {
@@ -32,15 +30,16 @@ class InputBox extends React.Component {
     }
 
     return (
-
-      <form ref={input => this.inputForm = input} onSubmit={this.createData} >
+      <form ref={input => (this.inputForm = input)} onSubmit={this.createData}>
         <input
           style={{ width: '50%', marginLeft: 50 }}
-          ref={input => this.name = input}
+          ref={input => (this.name = input)}
           type="text"
           label={placeholderValue}
         />
-        <Button style={{ marginLeft: 10 }} raised type="submit" color="accent">Add</Button>
+        <Button style={{ marginLeft: 10 }} raised type="submit" color="accent">
+          Add
+        </Button>
       </form>
     );
   }

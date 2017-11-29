@@ -22,7 +22,6 @@ import colors from './../../colors';
 import './../AddTimeTable/react-table.css';
 import { emptyStarterTimeTable } from '../../constants';
 
-
 class AddTeacherRooms extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +29,7 @@ class AddTeacherRooms extends Component {
     this.state = {
       teachers: {},
       rooms: {},
-      data: (this.props.match.path).slice(1),
+      data: this.props.match.path.slice(1),
       dialogOpen: false,
       index: -1,
       timeTableData: emptyStarterTimeTable,
@@ -75,7 +74,6 @@ class AddTeacherRooms extends Component {
     ];
   }
 
-
   componentWillMount = () => {
     this.ref1 = base.syncState('teachers', {
       context: this,
@@ -95,28 +93,28 @@ class AddTeacherRooms extends Component {
         rooms: JSON.parse(localStorageRef).rooms,
       });
     }
-  }
+  };
 
   componentWillUpdate = (nextProps, nextState) => {
     localStorage.setItem('data', JSON.stringify(nextState));
-  }
+  };
 
   componentWillUnmount = () => {
     base.removeBinding(this.ref1.endpoint);
     base.removeBinding(this.ref2.endpoint);
-  }
+  };
 
   addTeacher = (data) => {
     const teachers = { ...this.state.teachers };
     teachers[`teacher-${Date.now()}`] = data;
     this.setState({ teachers });
-  }
+  };
 
   addRoom = (data) => {
     const rooms = { ...this.state.rooms };
     rooms[`room-${Date.now()}`] = data;
     this.setState({ rooms });
-  }
+  };
 
   removeData = (key) => {
     if (this.state.data === 'teachers') {
@@ -124,68 +122,130 @@ class AddTeacherRooms extends Component {
     } else {
       this.removeRoom(key);
     }
-  }
+  };
 
   removeTeacher = (key) => {
     const teachers = { ...this.state.teachers };
     teachers[key] = null;
     this.setState({ teachers });
-  }
+  };
 
   removeRoom = (key) => {
     const rooms = { ...this.state.rooms };
     rooms[key] = null;
     this.setState({ rooms });
-  }
+  };
 
   generateTT = (item, name) => {
     const selector = item === 'teachers' ? 1 : 2;
     const selector2 = item === 'teachers' ? 2 : 1;
 
-    base.fetch('timeTables', {
-      context: this,
-      asArray: true,
-    }).then((data) => {
-      const generatedTT = [
-        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
-        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
-        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
-        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
-        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
-        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
-        { sl1: ['', '', ''], sl2: ['', '', ''], sl3: ['', '', ''], sl4: ['', '', ''], sl5: ['', '', ''], sl6: ['', '', ''], sl7: ['', '', ''] },
-      ];
+    base
+      .fetch('timeTables', {
+        context: this,
+        asArray: true,
+      })
+      .then((data) => {
+        const generatedTT = [
+          {
+            sl1: ['', '', ''],
+            sl2: ['', '', ''],
+            sl3: ['', '', ''],
+            sl4: ['', '', ''],
+            sl5: ['', '', ''],
+            sl6: ['', '', ''],
+            sl7: ['', '', ''],
+          },
+          {
+            sl1: ['', '', ''],
+            sl2: ['', '', ''],
+            sl3: ['', '', ''],
+            sl4: ['', '', ''],
+            sl5: ['', '', ''],
+            sl6: ['', '', ''],
+            sl7: ['', '', ''],
+          },
+          {
+            sl1: ['', '', ''],
+            sl2: ['', '', ''],
+            sl3: ['', '', ''],
+            sl4: ['', '', ''],
+            sl5: ['', '', ''],
+            sl6: ['', '', ''],
+            sl7: ['', '', ''],
+          },
+          {
+            sl1: ['', '', ''],
+            sl2: ['', '', ''],
+            sl3: ['', '', ''],
+            sl4: ['', '', ''],
+            sl5: ['', '', ''],
+            sl6: ['', '', ''],
+            sl7: ['', '', ''],
+          },
+          {
+            sl1: ['', '', ''],
+            sl2: ['', '', ''],
+            sl3: ['', '', ''],
+            sl4: ['', '', ''],
+            sl5: ['', '', ''],
+            sl6: ['', '', ''],
+            sl7: ['', '', ''],
+          },
+          {
+            sl1: ['', '', ''],
+            sl2: ['', '', ''],
+            sl3: ['', '', ''],
+            sl4: ['', '', ''],
+            sl5: ['', '', ''],
+            sl6: ['', '', ''],
+            sl7: ['', '', ''],
+          },
+          {
+            sl1: ['', '', ''],
+            sl2: ['', '', ''],
+            sl3: ['', '', ''],
+            sl4: ['', '', ''],
+            sl5: ['', '', ''],
+            sl6: ['', '', ''],
+            sl7: ['', '', ''],
+          },
+        ];
 
-      data.forEach((timeTable) => {
-        timeTable.data.forEach((row, index) => {
-          Object.keys(row).forEach((keys) => {
-            if (row[keys][selector] === name) {
-              generatedTT[index][keys] = [timeTable.classInfo, row[keys][0], row[keys][selector2]];
-            }
+        data.forEach((timeTable) => {
+          timeTable.data.forEach((row, index) => {
+            Object.keys(row).forEach((keys) => {
+              if (row[keys][selector] === name) {
+                generatedTT[index][keys] = [
+                  timeTable.classInfo,
+                  row[keys][0],
+                  row[keys][selector2],
+                ];
+              }
+            });
           });
         });
-      });
 
-      this.setState({
-        dialogOpen: true,
-        index: name,
-        timeTableData: generatedTT,
+        this.setState({
+          dialogOpen: true,
+          index: name,
+          timeTableData: generatedTT,
+        });
       });
-    });
   };
 
   dialogOpen = (index) => {
     this.generateTT(this.state.data, this.state[this.state.data][index].name);
-  }
+  };
 
   dialogClose = () => {
     this.setState({ dialogOpen: false });
-  }
+  };
 
   paperTitle = () =>
-    this.state.data === 'teachers'
+    (this.state.data === 'teachers'
       ? `Teacher's Name: ${this.state.index}`
-      : `Room Number: ${this.state.index}`
+      : `Room Number: ${this.state.index}`);
 
   name = () => {
     let data;
@@ -200,12 +260,12 @@ class AddTeacherRooms extends Component {
       name: '',
     };
     return data.name;
-  }
+  };
 
   renderCells = (cellInfo) => {
     const { timeTableData } = this.state;
     return (
-      <div style={{ backgroundColor: '#fafafa' }} >
+      <div style={{ backgroundColor: '#fafafa' }}>
         <div>{timeTableData[cellInfo.index][cellInfo.column.id][0] || 'Not Set'}</div>
         <br />
         <div>{timeTableData[cellInfo.index][cellInfo.column.id][1] || 'Not Set'}</div>
@@ -214,36 +274,37 @@ class AddTeacherRooms extends Component {
         <br />
       </div>
     );
-  }
+  };
 
   renderLi = () => {
     const { data, teachers, rooms } = this.state;
-    const render = key => (<RenderData
-      data={data}
-      key={key}
-      index={key}
-      state={this.state}
-      removeData={this.removeData}
-      clickHandler={this.dialogOpen}
-    />);
+    const render = key => (
+      <RenderData
+        data={data}
+        key={key}
+        index={key}
+        state={this.state}
+        removeData={this.removeData}
+        clickHandler={this.dialogOpen}
+      />
+    );
 
     if (data === 'teachers') {
-      return Object.keys(teachers)
-        .map(render);
+      return Object.keys(teachers).map(render);
     }
-    return Object.keys(rooms)
-      .map(render);
-  }
+    return Object.keys(rooms).map(render);
+  };
 
   render() {
     const { data, dialogOpen, timeTableData } = this.state;
     const { classes } = this.props;
     return (
       <div>
-
         <Card style={{ width: '35%', margin: 20, marginLeft: '32.5%' }}>
           <CardContent>
-            <Typography type="display2" style={{ marginLeft: '30%'}}>{data}</Typography>
+            <Typography type="display2" style={{ marginLeft: '30%' }}>
+              {data}
+            </Typography>
             <hr />
             <InputBox addTeacher={this.addTeacher} addRoom={this.addRoom} data={data} />
             <List style={{ margin: 20 }}>{this.renderLi()}</List>
@@ -256,9 +317,9 @@ class AddTeacherRooms extends Component {
           transition={<Slide direction="up" />}
           onRequestClose={this.dialogClose}
         >
-          <AppBar className={classes.appBar} >
+          <AppBar className={classes.appBar}>
             <Toolbar>
-              <IconButton color="contrast" onClick={this.dialogClose} aria-label="Close" >
+              <IconButton color="contrast" onClick={this.dialogClose} aria-label="Close">
                 <CloseIcon />
               </IconButton>
             </Toolbar>
@@ -267,8 +328,7 @@ class AddTeacherRooms extends Component {
           <Paper style={{ margin: '20px', padding: '20px' }} elevation={2} square>
             <Typography type="title">
               {this.paperTitle()}
-              <span className={classes.ttinfo}> {this.name()}
-              </span>
+              <span className={classes.ttinfo}> {this.name()}</span>
             </Typography>
           </Paper>
 
@@ -281,7 +341,6 @@ class AddTeacherRooms extends Component {
               showPagination={false}
             />
           </div>
-
         </Dialog>
       </div>
     );

@@ -1,5 +1,5 @@
 import Home from './Home';
-import Welcome from './Welcome'
+import Welcome from './Welcome';
 import Navbar from './Navbar';
 import Header from './Header';
 import AddTimeTable from './AddTimeTable';

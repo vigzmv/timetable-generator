@@ -1,46 +1,35 @@
 {
-    "extends": [
-        "airbnb",
-        "plugin:flowtype/recommended"
-    ],
-    "plugins": [
-        "flowtype",
-        "import",
-        "react",
-        "jsx-a11y"
-    ],
-    "env": {
-        "browser": true,
-        "commonjs": true,
-        "es6": true,
-        "node": true
+  "extends": ["airbnb", "plugin:flowtype/recommended"],
+  "plugins": ["flowtype", "import", "react", "jsx-a11y"],
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "sourceType": "module"
-    },
-    "rules": {
-        "no-const-assign": "warn",
-        "no-this-before-super": "warn",
-        "no-undef": "warn",
-        "no-unreachable": "warn",
-        "no-unused-vars": "warn",
-        "no-return-assign": "off",
-        "constructor-super": "warn",
-        "valid-typeof": "warn",
-        "global-require": "off",
-        "react/prop-types": "off",
-        "react/forbid-prop-types": "off",
-        "react/jsx-filename-extension": [
-            1,
-            {
-                "extensions": [
-                    ".js",
-                    ".jsx"
-                ]
-            }
-        ]
-    }
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-const-assign": "warn",
+    "no-this-before-super": "warn",
+    "no-undef": "warn",
+    "no-unreachable": "warn",
+    "no-unused-vars": "warn",
+    "no-return-assign": "off",
+    "constructor-super": "warn",
+    "valid-typeof": "warn",
+    "global-require": "off",
+    "react/prop-types": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ]
+  }
 }

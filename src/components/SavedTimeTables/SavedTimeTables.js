@@ -81,14 +81,17 @@ class SavedTimeTables extends Component {
   }
 
   fetchTimeTables() {
-    base.fetch('timeTables', {
-      context: this,
-      asArray: true,
-    }).then((data) => {
-      this.setState({ data });
-    }).catch((error) => {
-      window.console.log(error);
-    });
+    base
+      .fetch('timeTables', {
+        context: this,
+        asArray: true,
+      })
+      .then((data) => {
+        this.setState({ data });
+      })
+      .catch((error) => {
+        window.console.log(error);
+      });
   }
 
   dialogOpen(index) {
@@ -107,19 +110,22 @@ class SavedTimeTables extends Component {
 
   delete() {
     const { data, index } = this.state;
-    base.remove(`timeTables/${data[index].key}`).then(() => {
-      this.dialogClose();
-      this.props.history.push('/saved');
-      this.forceUpdate();
-    }).catch((error) => {
-      window.console.log(error);
-    });
+    base
+      .remove(`timeTables/${data[index].key}`)
+      .then(() => {
+        this.dialogClose();
+        this.props.history.push('/saved');
+        this.forceUpdate();
+      })
+      .catch((error) => {
+        window.console.log(error);
+      });
   }
 
   renderCells(cellInfo) {
     const { data, index } = this.state;
     return (
-      <div style={{ backgroundColor: '#fafafa' }} >
+      <div style={{ backgroundColor: '#fafafa' }}>
         <div>{data[index].data[cellInfo.index][cellInfo.column.id][0] || 'Not Set'}</div>
         <br />
         <div>{data[index].data[cellInfo.index][cellInfo.column.id][1] || 'Not Set'}</div>
@@ -135,9 +141,11 @@ class SavedTimeTables extends Component {
     const { data, dialogOpen, index } = this.state;
 
     return (
-      <Grid container className={classes.container} >
-        <Grid item >
-          <Typography type="title" className={classes.title} >Saved Time Tables</Typography>
+      <Grid container className={classes.container}>
+        <Grid item>
+          <Typography type="title" className={classes.title}>
+            Saved Time Tables
+          </Typography>
           <div>
             <TimeTablelList data={data} clickHandler={this.dialogOpen} />
 
@@ -147,17 +155,21 @@ class SavedTimeTables extends Component {
               transition={<Slide direction="up" />}
               onRequestClose={this.dialogClose}
             >
-              <AppBar className={classes.appBar} >
+              <AppBar className={classes.appBar}>
                 <Toolbar>
-                  <IconButton color="contrast" onClick={this.dialogClose} aria-label="Close" >
+                  <IconButton color="contrast" onClick={this.dialogClose} aria-label="Close">
                     <CloseIcon />
                   </IconButton>
                   <div className={classes.flex} />
-                  <Button raised color="primary" className={classes.button} onClick={this.edit} >
-                    <Typography type="caption" className={classes.settings} >&nbsp;Edit</Typography>
+                  <Button raised color="primary" className={classes.button} onClick={this.edit}>
+                    <Typography type="caption" className={classes.settings}>
+                      &nbsp;Edit
+                    </Typography>
                   </Button>
-                  <Button raised color="accent" className={classes.button} onClick={this.delete} >
-                    <Typography type="caption" className={classes.settings} >&nbsp;Delete</Typography>
+                  <Button raised color="accent" className={classes.button} onClick={this.delete}>
+                    <Typography type="caption" className={classes.settings}>
+                      &nbsp;Delete
+                    </Typography>
                   </Button>
                 </Toolbar>
               </AppBar>
@@ -165,14 +177,11 @@ class SavedTimeTables extends Component {
               <Paper style={{ margin: '20px', padding: '20px' }} elevation={2} square>
                 <Typography type="title">
                   Class:
-                  <span className={classes.ttinfo}> {data[index].classInfo}
-                  </span>
+                  <span className={classes.ttinfo}> {data[index].classInfo}</span>
                   Semester:
-                  <span className={classes.ttinfo}> {data[index].semester}
-                  </span>
+                  <span className={classes.ttinfo}> {data[index].semester}</span>
                   Shift:
-                  <span className={classes.ttinfo}> {data[index].shift}
-                  </span>
+                  <span className={classes.ttinfo}> {data[index].shift}</span>
                 </Typography>
               </Paper>
 
@@ -188,7 +197,7 @@ class SavedTimeTables extends Component {
             </Dialog>
           </div>
         </Grid>
-      </Grid >
+      </Grid>
     );
   }
 }
