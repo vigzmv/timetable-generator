@@ -51,7 +51,7 @@ function Header(props) {
     <div className={classes.root}>
       <AppBar position="static" className={classes.header}>
         <Toolbar className={classes.bar}>
-          <Link to="/" style={{ textDecoration: 'none' }}>
+          <Link to={`${process.env.PUBLIC_URL}/`} style={{ textDecoration: 'none' }}>
             <Button>
               <Home className={classes.icon} aria-label="home" />
               <Typography type="caption" className={classes.settings}>

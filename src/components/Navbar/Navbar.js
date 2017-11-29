@@ -24,16 +24,16 @@ class Navbar extends Component {
     const { history } = this.props;
     switch (index) {
       case 0:
-        history.push('/addnew');
+        history.push(`${process.env.PUBLIC_URL}/addnew`);
         break;
       case 1:
-        history.push('/saved');
+        history.push(`${process.env.PUBLIC_URL}/saved`);
         break;
       case 2:
-        history.push('/teachers');
+        history.push(`${process.env.PUBLIC_URL}/teachers`);
         break;
       case 3:
-        history.push('/rooms');
+        history.push(`${process.env.PUBLIC_URL}/rooms`);
         break;
       default:
         break;

@@ -16,12 +16,12 @@ class Home extends Component {
       <div>
         <Header />
         <Navbar />
-        <Route exact path="/addnew" component={AddTimeTable} />
-        <Route exact path="/addnew/:key" component={AddTimeTable} />
-        <Route exact path="/saved" component={SavedTimeTables} />
-        <Route exact path="/teachers" component={AddTeachersRooms} />
-        <Route exact path="/rooms" component={AddTeachersRooms} />
-        <Route exact path="/" component={Welcome} />
+        <Route exact path={`${process.env.PUBLIC_URL}/addnew`} component={AddTimeTable} />
+        <Route exact path={`${process.env.PUBLIC_URL}/addnew/:key`} component={AddTimeTable} />
+        <Route exact path={`${process.env.PUBLIC_URL}/saved`} component={SavedTimeTables} />
+        <Route exact path={`${process.env.PUBLIC_URL}/teachers`} component={AddTeachersRooms} />
+        <Route exact path={`${process.env.PUBLIC_URL}/rooms`} component={AddTeachersRooms} />
+        <Route exact path={`${process.env.PUBLIC_URL}/`} component={Welcome} />
       </div>
     );
   }
