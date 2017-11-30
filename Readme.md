@@ -31,13 +31,13 @@ Check out the live demo
 
 ## Run the App
 
-#### Install the dependencies:
+### Install the dependencies:
 
 ```sh
 yarn install || npm install
 ```
 
-#### Run the development server:
+### Run the development server:
 
 ```sh
 yarn start || npm start
@@ -49,7 +49,7 @@ Runs the app in the development mode.<br> Open
 The page will reload if you make edits.<br> You will also see any lint errors in
 the console.
 
-#### Build the app for production:
+### Build the app for production:
 
 ```sh
 yarn build || npm build
